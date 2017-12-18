@@ -1,14 +1,15 @@
 import Error from '../../../../../../modules/error'
 import Groups from '../../../../../../database/models/admin/users/groups/group'
-export default class Table
+
+export default class List
 {
 
   constructor (http)
   {
-    http.get('/admin/groups', Table.get)
+    http.get('/admin/groups', List.show)
   }
 
-  static get (req, res)
+  static show (req, res)
   {
     Groups.fetchAll({ withRelated : ['members'] })
       .then (g => {
@@ -17,8 +18,9 @@ export default class Table
         })
       })
       .catch (e => {
-        new Error('Admin - Group Viewing',e, req, res, 'normal')
+        new Error('Admin - Groups Listing',e, req, res, 'normal')
       })
+
   }
 
 }
